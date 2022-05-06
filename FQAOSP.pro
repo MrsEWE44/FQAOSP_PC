@@ -16,24 +16,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    appinstall.cpp \
     colorosapp.cpp \
     flymeapp.cpp \
     fqaosp.cpp \
     fqaospcore.cpp \
+    fqaospin.cpp \
     main.cpp \
     mainwindow.cpp \
     miuiapp.cpp \
     myuiapp.cpp \
+    otherapps.cpp \
     vivoapp.cpp
 
 HEADERS += \
+    appinstall.h \
     colorosapp.h \
     flymeapp.h \
     fqaosp.h \
     fqaospcore.h \
+    fqaospin.h \
     mainwindow.h \
     miuiapp.h \
     myuiapp.h \
+    otherapps.h \
     vivoapp.h
 
 FORMS += \

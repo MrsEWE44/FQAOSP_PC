@@ -22,6 +22,7 @@ public:
     bool disablepkg(QString pkgname,QString *devname);
     bool enablepkg(QString pkgname,QString *devname);
     bool uninstallpkg(QString pkgname,QString *devname);
+    bool installapk(QString apkpath,QString *devname);
 };
 
 #endif // FQAOSPCORE_H

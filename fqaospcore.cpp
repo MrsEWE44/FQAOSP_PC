@@ -96,3 +96,14 @@ bool fqaospCore::uninstallpkg(QString pkgname,QString *devname)
     }
     return false;
 }
+
+bool fqaospCore::installapk(QString apkpath, QString *devname)
+{
+    QString rrr = runcmd({getADB(),"-s",QString::fromUtf8(devname->toUtf8()),"install",apkpath});
+    QStringList sl = rrr.split("\r\n");
+
+    if(!sl.isEmpty() && sl.size() > 0 && sl.contains("Success")){
+        return true;
+    }
+    return false;
+}

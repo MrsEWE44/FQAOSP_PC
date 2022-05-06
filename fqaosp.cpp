@@ -25,7 +25,7 @@ void FQAOSP::test(QHBoxLayout *hbox)
     vbox2->addWidget(listWidget);
     hbox->addItem(vbox2);
     addBt(hbox);
-    connn(ed,list,blist,listWidget,{b3,b1,b4,b5,b6,b7,searchb,miui,flyme,coloros,vivo,myui});
+    connn(ed,list,blist,listWidget,{b3,b1,b4,b5,b6,b7,searchb,miui,flyme,coloros,vivo,myui,otherapp});
 }
 
 void FQAOSP::addBt(QHBoxLayout *hbox)
@@ -44,13 +44,14 @@ void FQAOSP::addBt(QHBoxLayout *hbox)
     flyme = new QPushButton("flyme策略");
     coloros = new QPushButton("coloros策略");
     vivo = new QPushButton("vivo策略");
+    otherapp = new QPushButton("其他策略");
 
     vbox = new QVBoxLayout();
     addBts(vbox,{b2,b1,b6,b7});
     addBts(vbox,{b3,b4,b5});
     addBts(vbox,{miui,flyme,coloros});
-    addBts(vbox,{myui,vivo});
-    initDisButton({miui,flyme,coloros,myui,vivo});
+    addBts(vbox,{myui,vivo,otherapp});
+    initDisButton({miui,flyme,coloros,myui,vivo,otherapp});
     hbox->addItem(vbox);
 }
 
@@ -88,7 +89,7 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
 
         devname= new QString(fqcore->getADBDevices());
         if(devname->isEmpty()){
-            QMessageBox::warning(this->m, "警告","b2",QMessageBox::Yes);
+            QMessageBox::warning(this->m, "警告","not device",QMessageBox::Yes);
         }else{
             enableBt(bs);
         }
@@ -308,6 +309,32 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
                     msg->exec();
     });
 
+    QObject::connect(bs[12],&QPushButton::clicked,[=](){
+
+        QMessageBox *msg = new QMessageBox();
+        msg->setWindowTitle("提示");
+        msg->setText("正在卸载第三方内置软件...");
+        msg->addButton(QMessageBox::Ok);
+        msg->button(QMessageBox::Ok)->setHidden(true);
+        OtherAPPS *m = new OtherAPPS(devname);
+        QThread *th = new QThread();
+        th->start();
+        m->moveToThread(th);
+
+        QObject::connect(th, &QThread::started, m, &OtherAPPS::Start);
+                    QObject::connect(m, &OtherAPPS::Finished, m,
+                                     &OtherAPPS::deleteLater);
+                    QObject::connect(m, &OtherAPPS::Finished, th, [=](){
+                        msg->close();
+                        th->quit();
+                    });
+                    QObject::connect(th, &QThread::finished, th, &QThread::deleteLater);
+
+                    msg->exec();
+    });
+
+
+
 
 }
 
@@ -326,6 +353,7 @@ void FQAOSP::showListWidgetDatas(QStringList sl,QList<QString> *list, QList<bool
             QCheckBox *check = new QCheckBox();
             check->setText(str);
             check->setChecked(false);
+
             QObject::connect(check,&QCheckBox::stateChanged,[=](){
                 blist->replace(i,check->isChecked());
             });
@@ -384,14 +412,8 @@ void FQAOSP::show(QMainWindow *qmain)
           ww = new QWidget();
           m->setWindowTitle("FQAOSP");
           m->setCentralWidget(ww);
-          m->close();
-
-
-        QHBoxLayout *hbox = new QHBoxLayout();
-        test(hbox);
-        vbox = new QVBoxLayout();
-        vbox->addItem(hbox);
-        ww->setLayout(vbox);
-
-
+          QHBoxLayout *hbox = new QHBoxLayout();
+          test(hbox);
+          ww->setLayout(hbox);
+          ww->show();
 }
