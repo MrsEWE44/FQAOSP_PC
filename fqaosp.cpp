@@ -74,7 +74,7 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
             if(blist->at(j)){
                 QMessageBox msgBox;
                 msgBox.setDefaultButton(QMessageBox::Ok);
-               if(fqcore->disablepkg(list->at(j),devname)){
+               if(fqcore->disablepkg(list->at(j),new QString(fqcore->getADBDevices()))){
                    msgBox.setWindowTitle("info");
                      msgBox.setText("disable [ " + list->at(j) + " ] sucess");
                  }else{
@@ -96,7 +96,7 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
     });
 
     QObject::connect(bs[0],&QPushButton::clicked,[=](){
-       QStringList pkgs = fqcore->getPackage3(devname);
+       QStringList pkgs = fqcore->getPackage3(new QString(fqcore->getADBDevices()));
        QMessageBox msgBox;
        msgBox.setDefaultButton(QMessageBox::Ok);
        if(pkgs.isEmpty() || pkgs.size() < 1){
@@ -112,12 +112,12 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
 
 
     QObject::connect(bs[2],&QPushButton::clicked,[=](){
-       QStringList pkgs = fqcore->getAllPackage(devname);
+       QStringList pkgs = fqcore->getAllPackage(new QString(fqcore->getADBDevices()));
        showmsg(pkgs,list,blist,listWidget);
     });
 
     QObject::connect(bs[3],&QPushButton::clicked,[=](){
-       QStringList pkgs = fqcore->getDisablePackage(devname);
+       QStringList pkgs = fqcore->getDisablePackage(new QString(fqcore->getADBDevices()));
        showmsg(pkgs,list,blist,listWidget);
     });
 
@@ -126,7 +126,7 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
             if(blist->at(j)){
                 QMessageBox msgBox;
                 msgBox.setDefaultButton(QMessageBox::Ok);
-               if(fqcore->enablepkg(list->at(j),devname)){
+               if(fqcore->enablepkg(list->at(j),new QString(fqcore->getADBDevices()))){
                    msgBox.setWindowTitle("info");
                      msgBox.setText("enable [ " + list->at(j) + " ] sucess");
                  }else{
@@ -146,7 +146,7 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
             if(blist->at(j)){
                 QMessageBox msgBox;
                 msgBox.setDefaultButton(QMessageBox::Ok);
-               if(fqcore->uninstallpkg(list->at(j),devname)){
+               if(fqcore->uninstallpkg(list->at(j),new QString(fqcore->getADBDevices()))){
                    msgBox.setWindowTitle("info");
                      msgBox.setText("uninstall [ " + list->at(j) + " ] sucess");
                  }else{
@@ -163,7 +163,7 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
 
     QObject::connect(bs[6],&QPushButton::clicked,[=](){
        if(ed->toPlainText().isEmpty()){
-           QStringList pkgs = fqcore->getPackage3(devname);
+           QStringList pkgs = fqcore->getPackage3(new QString(fqcore->getADBDevices()));
            QMessageBox msgBox;
            msgBox.setDefaultButton(QMessageBox::Ok);
            if(pkgs.isEmpty() || pkgs.size() < 1){
@@ -196,7 +196,7 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
         msg->setText("正在执行miui禁用策略...");
         msg->addButton(QMessageBox::Ok);
         msg->button(QMessageBox::Ok)->setHidden(true);
-        MIUIAPP *m = new MIUIAPP(devname);
+        MIUIAPP *m = new MIUIAPP(new QString(fqcore->getADBDevices()));
         QThread *th = new QThread();
         th->start();
         m->moveToThread(th);
@@ -220,7 +220,7 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
         msg->setText("正在执行flyme禁用策略...");
         msg->addButton(QMessageBox::Ok);
         msg->button(QMessageBox::Ok)->setHidden(true);
-        FLYMEAPP *m = new FLYMEAPP(devname);
+        FLYMEAPP *m = new FLYMEAPP(new QString(fqcore->getADBDevices()));
         QThread *th = new QThread();
         th->start();
         m->moveToThread(th);
@@ -244,7 +244,7 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
         msg->setText("正在执行coloros禁用策略...");
         msg->addButton(QMessageBox::Ok);
         msg->button(QMessageBox::Ok)->setHidden(true);
-        COLOROSAPP *m = new COLOROSAPP(devname);
+        COLOROSAPP *m = new COLOROSAPP(new QString(fqcore->getADBDevices()));
         QThread *th = new QThread();
         th->start();
         m->moveToThread(th);
@@ -268,7 +268,7 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
         msg->setText("正在执行vivo禁用策略...");
         msg->addButton(QMessageBox::Ok);
         msg->button(QMessageBox::Ok)->setHidden(true);
-        VIVOAPP *m = new VIVOAPP(devname);
+        VIVOAPP *m = new VIVOAPP(new QString(fqcore->getADBDevices()));
         QThread *th = new QThread();
         th->start();
         m->moveToThread(th);
@@ -292,7 +292,7 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
         msg->setText("正在执行myui禁用策略...");
         msg->addButton(QMessageBox::Ok);
         msg->button(QMessageBox::Ok)->setHidden(true);
-        MYUIAPP *m = new MYUIAPP(devname);
+        MYUIAPP *m = new MYUIAPP(new QString(fqcore->getADBDevices()));
         QThread *th = new QThread();
         th->start();
         m->moveToThread(th);
@@ -316,7 +316,7 @@ void FQAOSP::connn(QTextEdit *ed,QList<QString> *list, QList<bool> *blist, QList
         msg->setText("正在卸载第三方内置软件...");
         msg->addButton(QMessageBox::Ok);
         msg->button(QMessageBox::Ok)->setHidden(true);
-        OtherAPPS *m = new OtherAPPS(devname);
+        OtherAPPS *m = new OtherAPPS(new QString(fqcore->getADBDevices()));
         QThread *th = new QThread();
         th->start();
         m->moveToThread(th);
